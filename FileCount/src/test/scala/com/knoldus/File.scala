@@ -6,6 +6,8 @@ package com.knoldus
 import java.io.FileNotFoundException
 import java.nio.file.NotDirectoryException
 
+import java.io.FileNotFoundException
+
 import org.scalatest.FunSuite
 
 import scala.concurrent.Await
@@ -15,20 +17,17 @@ class File extends FunSuite {
 
 val obj=new FileCounter
   val filename = "/home/akhil/IdeaProjects/FileCount/src/main/resources/Directory1"
-  val res=obj.find(filename)
 
+
+ test("FileNotFoundException"){
+
+    intercept[FileNotFoundException] {
+
+      obj.getListOfFiles("/home/home")
+    }
+  }
   test("List of Files"){
-    assert(Await.result(res,2.second).length==5)
-  }
-  test("FileNotFoundException"){
-    intercept[FileNotFoundException]{
-      obj.find("/home/home/")
-    }
-  }
-  test("Not a directory"){
-    intercept[NotDirectoryException]{
-      obj.find("/home/akhil/IdeaProjects/FileCount/src/main/resources/Directory1/File1.txt")
-    }
 
+    assert(Await.result(obj.find(filename),2.second).length==5)
   }
 }

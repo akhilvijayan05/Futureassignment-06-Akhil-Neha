@@ -19,28 +19,30 @@ class FileCounter {
 
   }
 
+  @throws[FileNotFoundException]
   def getListOfFiles(dir: String):List[File] = {
 
-    try {
+
       val file = new File(dir)
-      //if (file.exists && file.isDirectory) {
+      if (file.exists && file.isDirectory) {
+
       for (list <- file.listFiles.toList) {
+
         if (list.isFile) {
+
           listoffile += list
         }
         else
+
           getListOfFiles(list.toString)
       }
-      // } else {
+      } else {
+      if(!file.exists())
+        throw new FileNotFoundException
 
-      // List[File]()
-      //}
+       List[File]()
+      }
       listoffile.toList
-    }catch {
-      case ex:FileNotFoundException =>{println(ex.getMessage);List[File]()}
-      case ex:NotDirectoryException =>{println(ex.getMessage);List[File]()}
-      case ex:Exception => {println(ex.getMessage);List[File]()}
-    }
 
   }
 }
